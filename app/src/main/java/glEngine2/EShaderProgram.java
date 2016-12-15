@@ -12,6 +12,13 @@ public class EShaderProgram
 
 
 
+    public EShaderProgram()
+    {
+        shaders = null;
+        iShaderIndex = 0;
+        iShaderProgram = 0;
+    }
+
     public EShaderProgram(int maxShaderCount)
     {
         shaders = new EShader[maxShaderCount];
@@ -27,7 +34,34 @@ public class EShaderProgram
         return iShaderIndex - 1;
     }
 
-    public void buildShaders()
+    public int buildProgram()
+    {
+        for (int i = 0; i < iShaderIndex; i++)
+        {
+            shaders[i].buildShader();
+        }
+
+        iShaderProgram = GLES20.glCreateProgram();
+
+        for (int i = 0; i < iShaderIndex; i++)
+        {
+            GLES20.glAttachShader(iShaderProgram, shaders[i].getShader());
+        }
+
+        GLES20.glLinkProgram(iShaderProgram);
+
+        return iShaderProgram;
+    }
+
+    public int getProgram()
+    {
+        return iShaderProgram;
+    }
+}
+
+
+/*
+public void buildShaders()
     {
         for (int i = 0; i < iShaderIndex; i++)
         {
@@ -46,9 +80,4 @@ public class EShaderProgram
 
         GLES20.glLinkProgram(iShaderProgram);
     }
-
-    public int getShaderProgram()
-    {
-        return iShaderProgram;
-    }
-}
+ */

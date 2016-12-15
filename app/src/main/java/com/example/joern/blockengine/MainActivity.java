@@ -17,6 +17,7 @@ public class MainActivity extends Activity
     private EGeometry geometry;
     private ERenderInstance instance;
     private EView view;
+    private EShaderManager shaderManager;
 
 
 
@@ -27,19 +28,27 @@ public class MainActivity extends Activity
 
         surfaceView = new ESurfaceView(this);
 
-        ((ESurfaceView)surfaceView).addShader("uniform mat4 uMVPMatrix;" +
+        shaderManager = new EShaderManager(16, 16);
+       // ((ESurfaceView)surfaceView).setShaderManager(shaderManager);
+
+        int programIndex = shaderManager.addProgram();
+
+        
+        shaderManager.getShaderProgram(programIndex).addShader(
+                "uniform mat4 uMVPMatrix;" +
                 "attribute vec4 vPosition;" +
                 "void main() {" +
                 "  gl_Position = uMVPMatrix * vPosition;" +
-                "}", GLES20.GL_VERTEX_SHADER);
+                "}",
+                GLES20.GL_VERTEX_SHADER);
 
-        ((ESurfaceView)surfaceView).addShader("precision mediump float;" +
+        shaderManager.getShaderProgram(programIndex).addShader(
+                "precision mediump float;" +
                 "uniform vec4 vColor;" +
                 "void main() {" +
                 "  gl_FragColor = vColor;" +
-                "}", GLES20.GL_FRAGMENT_SHADER);
-
-        setContentView(surfaceView);
+                "}",
+                GLES20.GL_FRAGMENT_SHADER);
 
         float[][] triVerts1 =
                 {
@@ -58,13 +67,17 @@ public class MainActivity extends Activity
         float[] triColor2 = { 1, 1, 0, 1 };
 
         geometry = new EGeometry(256, 256);
-        geometry.addFace(triVerts1[0], triVerts1[1], triVerts1[2], 0, triColor1);
-        geometry.addFace(triVerts2[0], triVerts2[1], triVerts2[2], 0, triColor2);
+        geometry.addFace(triVerts1[0], triVerts1[1], triVerts1[2], programIndex, triColor1);
+        geometry.addFace(triVerts2[0], triVerts2[1], triVerts2[2], programIndex, triColor2);
 
         view = new EView();
         view.setViewTarget(5, 5, -5, 0, 0, 0);
 
-        instance = new ERenderInstance(geometry, view);
+        instance = new ERenderInstance(geometry, view, shaderManager);
+
+
+
+        setContentView(surfaceView);
 
         ((ESurfaceView)surfaceView).linkRenderInstance(instance);
 

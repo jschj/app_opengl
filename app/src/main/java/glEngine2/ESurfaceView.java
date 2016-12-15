@@ -28,11 +28,6 @@ public class ESurfaceView extends GLSurfaceView
         renderer.setRenderInstance(instance);
     }
 
-    public void addShader(String code, int type)
-    {
-        renderer.addShader(code, type);
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent e)
     {

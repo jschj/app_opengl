@@ -15,23 +15,20 @@ import java.nio.*;
 public class ERenderer implements GLSurfaceView.Renderer
 {
     private ERenderInstance renderInstance;
-    private EShaderProgram shaderProgram;
+    private EShaderManager shaderManager;
 
 
 
     public ERenderer()
     {
-        shaderProgram = new EShaderProgram(16);
+
     }
 
     public void setRenderInstance(ERenderInstance instance)
     {
         renderInstance = instance;
-    }
 
-    public int addShader(String code, int type)
-    {
-        return shaderProgram.addShader(code, type);
+        shaderManager = renderInstance.shaderManager;
     }
 
     @Override
@@ -41,7 +38,10 @@ public class ERenderer implements GLSurfaceView.Renderer
         GLES20.glEnable(GLES20.GL_DEPTH_FUNC);
         GLES20.glDepthFunc(GLES20.GL_LEQUAL);
 
-        shaderProgram.buildShaders();
+        if (shaderManager != null)
+        {
+            shaderManager.buildShaderPrograms();
+        }
     }
 
     @Override
@@ -77,11 +77,11 @@ public class ERenderer implements GLSurfaceView.Renderer
             vertexBuffer.position(0);
 
             //setting up shader
-            shaderProg = shaderProgram.getShaderProgram();
+            shaderProg =  shaderManager.getShaderProgram(face.iShaderProgramIndex).getProgram();
 
             GLES20.glUseProgram(shaderProg);
 
-            //providing all information for shaders
+            //providing all information for the shaders
             positionHandle = GLES20.glGetAttribLocation(shaderProg, "vPosition");
             GLES20.glEnableVertexAttribArray(positionHandle);
 
