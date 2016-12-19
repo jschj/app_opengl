@@ -51,8 +51,17 @@ public class ESurfaceView extends GLSurfaceView
 
             renderer.getRenderInstance().view.getViewInfo(viewInfo);
 
-            EMath.rotate3y(viewInfo, dx / 100);
-            EMath.rotate3z(viewInfo, dy / 100);
+            //EMath.rotate3y(viewInfo, dx / 100);
+            //EMath.rotate3z(viewInfo, dy / 100);
+
+            dx = dx / 100;
+            dy = dy / 100;
+
+            viewInfo[0] += dx - dy;
+            viewInfo[2] += dx + dy;
+
+            viewInfo[6] += dx - dy;
+            viewInfo[8] += dx + dy;
 
             renderer.getRenderInstance().view.setViewTarget(viewInfo[0], viewInfo[1], viewInfo[2],
                     viewInfo[6], viewInfo[7], viewInfo[8]);

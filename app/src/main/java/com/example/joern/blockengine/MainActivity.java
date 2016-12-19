@@ -57,6 +57,49 @@ public class MainActivity extends Activity
                 "}"
      */
 
+    private void addCube(float cx, float cy, float cz, float w, float r, float g, float b, int i)
+    {
+        w /= 2;
+
+        float[][] cv =
+                {
+                        { cx - w, cy - w, cz - w },     //front left bottom     0
+                        { cx - w, cy + w, cz - w },     //front left top        1
+                        { cx + w, cy - w, cz - w },     //front right bottom    2
+                        { cx + w, cy + w, cz - w },     //front right top       3
+                        { cx - w, cy - w, cz + w },     //back left bottom      4
+                        { cx - w, cy + w, cz + w },     //back left top         5
+                        { cx + w, cy - w, cz + w },     //back right bottom     6
+                        { cx + w, cy + w, cz + w }      //back right top        7
+                };
+
+        float[] c = { r, g, b };
+
+        //front
+        geometry.addFace(cv[0], cv[1], cv[3], c, c, c, i);
+        geometry.addFace(cv[1], cv[2], cv[3], c, c, c, i);
+
+        //back
+        geometry.addFace(cv[4], cv[5], cv[7], c, c, c, i);
+        geometry.addFace(cv[4], cv[6], cv[7], c, c, c, i);
+
+        //bottom
+        geometry.addFace(cv[0], cv[4], cv[6], c, c, c, i);
+        geometry.addFace(cv[0], cv[2], cv[6], c, c, c, i);
+
+        //top
+        geometry.addFace(cv[1], cv[5], cv[7], c, c, c, i);
+        geometry.addFace(cv[1], cv[3], cv[7], c, c, c, i);
+
+        //left
+        geometry.addFace(cv[0], cv[1], cv[5], c, c, c, i);
+        geometry.addFace(cv[0], cv[4], cv[5], c, c, c, i);
+
+        //right
+        geometry.addFace(cv[2], cv[3], cv[7], c, c, c, i);
+        geometry.addFace(cv[2], cv[6], cv[7], c, c, c, i);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -103,7 +146,7 @@ public class MainActivity extends Activity
         float[] colorGreen = { 0, 1, 0 };
         float[] colorBlue = { 0, 0, 1 };
 
-        geometry = new EGeometry(256, 256);
+        geometry = new EGeometry(40000, 40000);
         //geometry.addFace(triVerts1[0], triVerts1[1], triVerts1[2], colorRed, colorGreen, colorBlue, programIndex);
         //geometry.addFace(triVerts2[0], triVerts2[1], triVerts2[2], colorRed, colorGreen, colorBlue, programIndex);
 
@@ -118,6 +161,7 @@ public class MainActivity extends Activity
         //6 red
         //7 green
 
+        /*
         //front
         geometry.addFace(cubeVerts[0], cubeVerts[1], cubeVerts[3], colorRed, colorGreen, colorRed, programIndex);
         geometry.addFace(cubeVerts[0], cubeVerts[2], cubeVerts[3], colorRed, colorBlue, colorRed, programIndex);
@@ -141,10 +185,18 @@ public class MainActivity extends Activity
         //right
         geometry.addFace(cubeVerts[2], cubeVerts[3], cubeVerts[6], colorBlue, colorRed, colorRed, programIndex);
         geometry.addFace(cubeVerts[3], cubeVerts[6], cubeVerts[7], colorRed, colorRed, colorGreen, programIndex);
+        */
 
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                addCube(-5 + i, (float)(-Math.sin((double)(i + -j) / 10.0f)), -5 + j, 1, 0.2f, (float)Math.random(), 0, programIndex);
+            }
+        }
 
         view = new EView();
-        view.setViewTarget(5, 5, -5, 0, 0, 0);
+        view.setViewTarget(10, 10, -10, 0, 0, 0);
 
         instance = new ERenderInstance(geometry, view, shaderManager);
 

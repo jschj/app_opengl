@@ -22,7 +22,7 @@ public class ERenderer implements GLSurfaceView.Renderer
 
     public ERenderer()
     {
-        vBuffer = ByteBuffer.allocateDirect(1024).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        vBuffer = ByteBuffer.allocateDirect(400000).order(ByteOrder.nativeOrder()).asFloatBuffer();
         iVBOBuffers = new int[16];
     }
 
