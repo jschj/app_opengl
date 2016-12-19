@@ -4,10 +4,10 @@ import android.opengl.*;
 import android.app.Activity;
 import android.os.Bundle;
 
-import glEngine2.EGeometry;
-import glEngine2.ERenderInstance;
-import glEngine2.ESurfaceView;
-import glEngine2.*;
+import EEngine.EGeometry;
+import EEngine.ERenderInstance;
+import EEngine.ESurfaceView;
+import EEngine.*;
 
 
 
@@ -19,7 +19,43 @@ public class MainActivity extends Activity
     private EView view;
     private EShaderManager shaderManager;
 
+    private static final String vertexShaderCode =
+            "uniform mat4 uMVPMatrix;" +
+            "attribute vec3 v3Color;" +
+            "attribute vec4 v4Position;" +
+            "varying vec4 v4FragColor;" +
+            "void main()" +
+            "{" +
+            "    gl_Position = uMVPMatrix * v4Position;" +
+            "    v4FragColor = vec4(v3Color.x, v3Color.y, v3Color.z, 1.0);" +
+            "}";
 
+    private static final String fragmentShaderCode =
+            "precision mediump float;" +
+            "varying vec4 v4FragColor;" +
+            "void main()" +
+            "{" +
+            "    gl_FragColor = v4FragColor;" +
+            "}";
+
+    /*
+        "uniform mat4 uMVPMatrix;" +
+                "attribute vec4 vPosition;" +
+                "void main() {" +
+                "  gl_Position = uMVPMatrix * vPosition;" +
+                "}"
+
+        precision mediump float;" +
+                //"uniform vec4 vColor;" +
+                //"in vec3 myColor" +
+                //"attribute vec3 vertexColor;" +
+                "void main() {" +
+                //"  gl_FragColor = vColor;" +
+                //"  gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);" +
+                //"  gl_FragColor = vec4(vertexColor, 1.0);" +
+                "  gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);" +
+                "}"
+     */
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -29,26 +65,13 @@ public class MainActivity extends Activity
         surfaceView = new ESurfaceView(this);
 
         shaderManager = new EShaderManager(16, 16);
-       // ((ESurfaceView)surfaceView).setShaderManager(shaderManager);
 
         int programIndex = shaderManager.addProgram();
 
         
-        shaderManager.getShaderProgram(programIndex).addShader(
-                "uniform mat4 uMVPMatrix;" +
-                "attribute vec4 vPosition;" +
-                "void main() {" +
-                "  gl_Position = uMVPMatrix * vPosition;" +
-                "}",
-                GLES20.GL_VERTEX_SHADER);
+        shaderManager.getShaderProgram(programIndex).addShader(vertexShaderCode, GLES20.GL_VERTEX_SHADER);
 
-        shaderManager.getShaderProgram(programIndex).addShader(
-                "precision mediump float;" +
-                "uniform vec4 vColor;" +
-                "void main() {" +
-                "  gl_FragColor = vColor;" +
-                "}",
-                GLES20.GL_FRAGMENT_SHADER);
+        shaderManager.getShaderProgram(programIndex).addShader(fragmentShaderCode,  GLES20.GL_FRAGMENT_SHADER);
 
         float[][] triVerts1 =
                 {
@@ -56,7 +79,6 @@ public class MainActivity extends Activity
                         { -0.5f, -0.5f, 0.0f },
                         { 0.5f, -0.5f, 0.0f }
                 };
-        float[] triColor1 = { 1, 0, 0, 1 };
 
         float[][] triVerts2 =
                 {
@@ -64,11 +86,62 @@ public class MainActivity extends Activity
                         { 0.0f, -0.5f, -0.5f },
                         { 0.0f, -0.5f, 0.5f }
                 };
-        float[] triColor2 = { 1, 1, 0, 1 };
+
+        float[][] cubeVerts =
+                {
+                        { -0.5f, -0.5f, -0.5f },        //left bottom front
+                        { -0.5f, 0.5f, -0.5f },         //left top front
+                        { 0.5f, -0.5f, -0.5f },         //right bottom front
+                        { 0.5f, 0.5f, -0.5f },          //right top front
+                        { -0.5f, -0.5f, 0.5f },         //left bottom back
+                        { -0.5f, 0.5f, 0.5f },          //left top back
+                        { 0.5f, -0.5f, 0.5f },          //right bottom back
+                        { 0.5f, 0.5f, 0.5f }            //right top back
+                };
+
+        float[] colorRed = { 1, 0, 0 };
+        float[] colorGreen = { 0, 1, 0 };
+        float[] colorBlue = { 0, 0, 1 };
 
         geometry = new EGeometry(256, 256);
-        geometry.addFace(triVerts1[0], triVerts1[1], triVerts1[2], programIndex, triColor1);
-        geometry.addFace(triVerts2[0], triVerts2[1], triVerts2[2], programIndex, triColor2);
+        //geometry.addFace(triVerts1[0], triVerts1[1], triVerts1[2], colorRed, colorGreen, colorBlue, programIndex);
+        //geometry.addFace(triVerts2[0], triVerts2[1], triVerts2[2], colorRed, colorGreen, colorBlue, programIndex);
+
+        //0 red
+        //1 green
+        //2 blue
+
+        //3 red
+        //4 green
+        //5 blue
+
+        //6 red
+        //7 green
+
+        //front
+        geometry.addFace(cubeVerts[0], cubeVerts[1], cubeVerts[3], colorRed, colorGreen, colorRed, programIndex);
+        geometry.addFace(cubeVerts[0], cubeVerts[2], cubeVerts[3], colorRed, colorBlue, colorRed, programIndex);
+
+        //bottom
+        geometry.addFace(cubeVerts[0], cubeVerts[2], cubeVerts[6], colorRed, colorBlue, colorRed, programIndex);
+        geometry.addFace(cubeVerts[0], cubeVerts[4], cubeVerts[6], colorRed, colorGreen, colorRed, programIndex);
+
+        //back
+        geometry.addFace(cubeVerts[4], cubeVerts[6], cubeVerts[5], colorGreen, colorRed, colorBlue, programIndex);
+        geometry.addFace(cubeVerts[6], cubeVerts[7], cubeVerts[5], colorRed, colorGreen, colorBlue, programIndex);
+
+        //top
+        geometry.addFace(cubeVerts[1], cubeVerts[3], cubeVerts[7], colorGreen, colorRed, colorGreen, programIndex);
+        geometry.addFace(cubeVerts[1], cubeVerts[5], cubeVerts[7], colorGreen, colorBlue, colorGreen, programIndex);
+
+        //left
+        geometry.addFace(cubeVerts[0], cubeVerts[1], cubeVerts[5], colorRed, colorGreen, colorBlue, programIndex);
+        geometry.addFace(cubeVerts[0], cubeVerts[4], cubeVerts[5], colorRed, colorGreen, colorBlue, programIndex);
+
+        //right
+        geometry.addFace(cubeVerts[2], cubeVerts[3], cubeVerts[6], colorBlue, colorRed, colorRed, programIndex);
+        geometry.addFace(cubeVerts[3], cubeVerts[6], cubeVerts[7], colorRed, colorRed, colorGreen, programIndex);
+
 
         view = new EView();
         view.setViewTarget(5, 5, -5, 0, 0, 0);

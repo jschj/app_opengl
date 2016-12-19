@@ -1,4 +1,4 @@
-package glEngine2;
+package EEngine;
 
 import android.opengl.GLES20;
 
