@@ -26,9 +26,9 @@ public class ESurfaceView extends GLSurfaceView
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
-    public void linkRenderInstance(ERenderInstance instance)
+    public void setRenderContext(ERenderContext context)
     {
-        renderer.setRenderInstance(instance);
+        renderer.setRenderContext(context);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ESurfaceView extends GLSurfaceView
 
             d = (dx + dy) / 8;
 
-            renderer.getRenderInstance().view.getViewInfo(viewInfo);
+            renderer.getRenderContext().view.getViewInfo(viewInfo);
 
             //EMath.rotate3y(viewInfo, dx / 100);
             //EMath.rotate3z(viewInfo, dy / 100);
@@ -63,7 +63,7 @@ public class ESurfaceView extends GLSurfaceView
             viewInfo[6] += dx - dy;
             viewInfo[8] += dx + dy;
 
-            renderer.getRenderInstance().view.setViewTarget(viewInfo[0], viewInfo[1], viewInfo[2],
+            renderer.getRenderContext().view.setViewTarget(viewInfo[0], viewInfo[1], viewInfo[2],
                     viewInfo[6], viewInfo[7], viewInfo[8]);
         }
 

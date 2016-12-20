@@ -4,7 +4,6 @@ import android.opengl.*;
 import android.app.Activity;
 import android.os.Bundle;
 
-import EEngine.EGeometry;
 import EEngine.ERenderInstance;
 import EEngine.ESurfaceView;
 import EEngine.*;
@@ -14,8 +13,8 @@ import EEngine.*;
 public class MainActivity extends Activity
 {
     private GLSurfaceView surfaceView;
-    private EGeometry geometry;
-    private ERenderInstance instance;
+    private EGeometryDynamic geometry;
+    private ERenderContext context;
     private EView view;
     private EShaderManager shaderManager;
 
@@ -57,7 +56,7 @@ public class MainActivity extends Activity
                 "}"
      */
 
-    private void addCube(float cx, float cy, float cz, float w, float r, float g, float b, int i)
+    private void addCube(float cx, float cy, float cz, float w, float r, float g, float b)
     {
         w /= 2;
 
@@ -76,28 +75,28 @@ public class MainActivity extends Activity
         float[] c = { r, g, b };
 
         //front
-        geometry.addFace(cv[0], cv[1], cv[3], c, c, c, i);
-        geometry.addFace(cv[1], cv[2], cv[3], c, c, c, i);
+        geometry.addFace(cv[0], cv[1], cv[3], c, c, c);
+        geometry.addFace(cv[1], cv[2], cv[3], c, c, c);
 
         //back
-        geometry.addFace(cv[4], cv[5], cv[7], c, c, c, i);
-        geometry.addFace(cv[4], cv[6], cv[7], c, c, c, i);
+        geometry.addFace(cv[4], cv[5], cv[7], c, c, c);
+        geometry.addFace(cv[4], cv[6], cv[7], c, c, c);
 
         //bottom
-        geometry.addFace(cv[0], cv[4], cv[6], c, c, c, i);
-        geometry.addFace(cv[0], cv[2], cv[6], c, c, c, i);
+        geometry.addFace(cv[0], cv[4], cv[6], c, c, c);
+        geometry.addFace(cv[0], cv[2], cv[6], c, c, c);
 
         //top
-        geometry.addFace(cv[1], cv[5], cv[7], c, c, c, i);
-        geometry.addFace(cv[1], cv[3], cv[7], c, c, c, i);
+        geometry.addFace(cv[1], cv[5], cv[7], c, c, c);
+        geometry.addFace(cv[1], cv[3], cv[7], c, c, c);
 
         //left
-        geometry.addFace(cv[0], cv[1], cv[5], c, c, c, i);
-        geometry.addFace(cv[0], cv[4], cv[5], c, c, c, i);
+        geometry.addFace(cv[0], cv[1], cv[5], c, c, c);
+        geometry.addFace(cv[0], cv[4], cv[5], c, c, c);
 
         //right
-        geometry.addFace(cv[2], cv[3], cv[7], c, c, c, i);
-        geometry.addFace(cv[2], cv[6], cv[7], c, c, c, i);
+        geometry.addFace(cv[2], cv[3], cv[7], c, c, c);
+        geometry.addFace(cv[2], cv[6], cv[7], c, c, c);
     }
 
     @Override
@@ -146,7 +145,8 @@ public class MainActivity extends Activity
         float[] colorGreen = { 0, 1, 0 };
         float[] colorBlue = { 0, 0, 1 };
 
-        geometry = new EGeometry(40000, 40000);
+        //geometry = new EGeometry(400000, 400000);
+        geometry = new EGeometryDynamic(4096, 4096);
         //geometry.addFace(triVerts1[0], triVerts1[1], triVerts1[2], colorRed, colorGreen, colorBlue, programIndex);
         //geometry.addFace(triVerts2[0], triVerts2[1], triVerts2[2], colorRed, colorGreen, colorBlue, programIndex);
 
@@ -191,20 +191,20 @@ public class MainActivity extends Activity
         {
             for (int j = 0; j < 10; j++)
             {
-                addCube(-5 + i, (float)(-Math.sin((double)(i + -j) / 10.0f)), -5 + j, 1, 0.2f, (float)Math.random(), 0, programIndex);
+                addCube(-5 + i, (float)(Math.random() * 0.1), -5 + j, 1, 0.2f, (float)Math.random(), 0);
             }
         }
 
         view = new EView();
         view.setViewTarget(10, 10, -10, 0, 0, 0);
 
-        instance = new ERenderInstance(geometry, view, shaderManager);
+        context = new ERenderContext(programIndex, geometry, shaderManager, view);
 
 
 
         setContentView(surfaceView);
 
-        ((ESurfaceView)surfaceView).linkRenderInstance(instance);
+        ((ESurfaceView)surfaceView).setRenderContext(context);
 
         new Thread(new Runnable()
         {
@@ -223,7 +223,8 @@ public class MainActivity extends Activity
 
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         // The following call pauses the rendering thread.
         // If your OpenGL application is memory intensive,
