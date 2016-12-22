@@ -36,25 +36,6 @@ public class MainActivity extends Activity
             "    gl_FragColor = v4FragColor;" +
             "}";
 
-    /*
-        "uniform mat4 uMVPMatrix;" +
-                "attribute vec4 vPosition;" +
-                "void main() {" +
-                "  gl_Position = uMVPMatrix * vPosition;" +
-                "}"
-
-        precision mediump float;" +
-                //"uniform vec4 vColor;" +
-                //"in vec3 myColor" +
-                //"attribute vec3 vertexColor;" +
-                "void main() {" +
-                //"  gl_FragColor = vColor;" +
-                //"  gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);" +
-                //"  gl_FragColor = vec4(vertexColor, 1.0);" +
-                "  gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);" +
-                "}"
-     */
-
     private void addCube(float cx, float cy, float cz, float w, float r, float g, float b)
     {
         w /= 2;
@@ -144,47 +125,7 @@ public class MainActivity extends Activity
         float[] colorGreen = { 0, 1, 0 };
         float[] colorBlue = { 0, 0, 1 };
 
-        //geometry = new EGeometry(400000, 400000);
         geometry = new EGeometryDynamic(4096, 4096);
-        //geometry.addFace(triVerts1[0], triVerts1[1], triVerts1[2], colorRed, colorGreen, colorBlue, programIndex);
-        //geometry.addFace(triVerts2[0], triVerts2[1], triVerts2[2], colorRed, colorGreen, colorBlue, programIndex);
-
-        //0 red
-        //1 green
-        //2 blue
-
-        //3 red
-        //4 green
-        //5 blue
-
-        //6 red
-        //7 green
-
-        /*
-        //front
-        geometry.addFace(cubeVerts[0], cubeVerts[1], cubeVerts[3], colorRed, colorGreen, colorRed, programIndex);
-        geometry.addFace(cubeVerts[0], cubeVerts[2], cubeVerts[3], colorRed, colorBlue, colorRed, programIndex);
-
-        //bottom
-        geometry.addFace(cubeVerts[0], cubeVerts[2], cubeVerts[6], colorRed, colorBlue, colorRed, programIndex);
-        geometry.addFace(cubeVerts[0], cubeVerts[4], cubeVerts[6], colorRed, colorGreen, colorRed, programIndex);
-
-        //back
-        geometry.addFace(cubeVerts[4], cubeVerts[6], cubeVerts[5], colorGreen, colorRed, colorBlue, programIndex);
-        geometry.addFace(cubeVerts[6], cubeVerts[7], cubeVerts[5], colorRed, colorGreen, colorBlue, programIndex);
-
-        //top
-        geometry.addFace(cubeVerts[1], cubeVerts[3], cubeVerts[7], colorGreen, colorRed, colorGreen, programIndex);
-        geometry.addFace(cubeVerts[1], cubeVerts[5], cubeVerts[7], colorGreen, colorBlue, colorGreen, programIndex);
-
-        //left
-        geometry.addFace(cubeVerts[0], cubeVerts[1], cubeVerts[5], colorRed, colorGreen, colorBlue, programIndex);
-        geometry.addFace(cubeVerts[0], cubeVerts[4], cubeVerts[5], colorRed, colorGreen, colorBlue, programIndex);
-
-        //right
-        geometry.addFace(cubeVerts[2], cubeVerts[3], cubeVerts[6], colorBlue, colorRed, colorRed, programIndex);
-        geometry.addFace(cubeVerts[3], cubeVerts[6], cubeVerts[7], colorRed, colorRed, colorGreen, programIndex);
-        */
 
         for (int i = 0; i < 10; i++)
         {
