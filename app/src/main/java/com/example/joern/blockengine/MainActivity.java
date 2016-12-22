@@ -4,7 +4,6 @@ import android.opengl.*;
 import android.app.Activity;
 import android.os.Bundle;
 
-import EEngine.ERenderInstance;
 import EEngine.ESurfaceView;
 import EEngine.*;
 
