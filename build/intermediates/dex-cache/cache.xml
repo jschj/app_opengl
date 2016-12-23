@@ -12,6 +12,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.3"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_eef383192f5d8095006f15187d5b1b141a29e256.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -39,51 +48,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.3"
-        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
-        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_a5b98c3a6f3183f379b3596a5dc2bca138ee1a24.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.3"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.2.1_f6e0f2ba9f73d3feeb27df50662e693a5664e526.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.3"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_8872d37ac25e1b8d612d1a0ca0707d3197bc8439.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.3"
-        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-24.2.1_642be487fd49465947a077420465c5f9af34d016.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.3"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_eef383192f5d8095006f15187d5b1b141a29e256.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
         jumboMode="false"
         optimize="true"
@@ -93,12 +57,30 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.3"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_a5b98c3a6f3183f379b3596a5dc2bca138ee1a24.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/joern/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.3"
         sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
         <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/support-annotations-24.2.1_57430fd662459c1dc5efff0b6edc6eaf12066bcd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.3"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.2.1_f6e0f2ba9f73d3feeb27df50662e693a5664e526.jar" />
     </item>
     <item
         is-multidex="false"
@@ -129,12 +111,30 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.3"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_8872d37ac25e1b8d612d1a0ca0707d3197bc8439.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
         jumboMode="false"
         optimize="true"
         revision="24.0.3"
         sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
         <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_ee630e40f5973769890be73fe54bd36ba0ece527.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/joern/android/BlockEngine/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.3"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="/home/joern/android/BlockEngine/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-24.2.1_642be487fd49465947a077420465c5f9af34d016.jar" />
     </item>
 
 </items>

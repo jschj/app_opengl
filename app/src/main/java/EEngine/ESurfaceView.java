@@ -17,7 +17,8 @@ public class ESurfaceView extends GLSurfaceView
     {
         super(context);
 
-        setEGLContextClientVersion(2);
+        super.setEGLConfigChooser(true);
+        this.setEGLContextClientVersion(2);
 
         renderer = new ERenderer();
 

@@ -15,6 +15,8 @@ public class EGeometryDynamic
     private int iFaceBufferLength;
     private int iFaceBufferIndex;
 
+    private boolean bGeometryChangedFlag;
+
 
 
     public EGeometryDynamic(int floatExpSize, int faceExpSize)
@@ -26,6 +28,8 @@ public class EGeometryDynamic
         iFaceExpansionSize = faceExpSize;
         iFloatBufferLength = 0;
         iFaceBufferLength = 0;
+
+        bGeometryChangedFlag = true;
 
         expandFloatBuffer();
         expandFaceBuffer();
@@ -68,6 +72,16 @@ public class EGeometryDynamic
         return (i >= 0 && i < iFaceBufferLength);
     }
 
+    public void setGeometryChangedFlag(boolean state)
+    {
+        bGeometryChangedFlag = state;
+    }
+
+    public boolean getGeometryChangedFlag()
+    {
+        return bGeometryChangedFlag;
+    }
+
     private void expandFloatBuffer()
     {
         float[] newFloats = new float[iFloatBufferLength + iFloatExpansionSize];
@@ -99,6 +113,8 @@ public class EGeometryDynamic
     {
         iFloatBufferIndex = 0;
         iFaceBufferIndex = 0;
+
+        setGeometryChangedFlag(true);
     }
 
     public int addFloats(float[] f, int offset, int count)
@@ -114,6 +130,8 @@ public class EGeometryDynamic
         }
 
         iFloatBufferIndex += count;
+
+        setGeometryChangedFlag(true);
 
         return iFloatBufferIndex - count;
     }
@@ -138,6 +156,8 @@ public class EGeometryDynamic
         faceBuffer[iFaceBufferIndex] = face;
         iFaceBufferIndex++;
 
+        setGeometryChangedFlag(true);
+
         return iFaceBufferIndex - 1;
     }
 
@@ -151,6 +171,8 @@ public class EGeometryDynamic
                 addFloats(colorB, 0, 3),
                 addFloats(colorC, 0, 3)
         );
+
+        setGeometryChangedFlag(true);
 
         return addFace(face);
     }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import EEngine.ESurfaceView;
 import EEngine.*;
 
+import FileTest.FileTest;
+
 
 
 public class MainActivity extends Activity
@@ -34,6 +36,7 @@ public class MainActivity extends Activity
             "void main()" +
             "{" +
             "    gl_FragColor = v4FragColor;" +
+            //"    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);" +
             "}";
 
     private void addCube(float cx, float cy, float cz, float w, float r, float g, float b)
@@ -82,6 +85,11 @@ public class MainActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        while (!Permissions.requestExternalStoragePermission(this))
+        {
+
+        }
+
         super.onCreate(savedInstanceState);
 
         surfaceView = new ESurfaceView(this);
@@ -157,9 +165,12 @@ public class MainActivity extends Activity
             }
         }).start();
 
+        FileTest.openFile("/sdcard/Pictures/Wallpaper/Cracks.png");
+
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         //setContentView(R.layout.activity_main);
     }
+
 
 
     @Override

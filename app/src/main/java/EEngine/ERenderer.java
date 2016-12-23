@@ -25,6 +25,33 @@ public class ERenderer implements GLSurfaceView.Renderer
         iVBOBuffers = new int[16];
     }
 
+    private void updateGeometry()
+    {
+        EFace face;
+        float[] posBuf;
+
+        posBuf = new float[(3 + 3) * 3];
+
+        for (int i = 0; i < renderContext.geometry.getFaceCount(); i++)
+        {
+            //setting up vertices
+            face = renderContext.geometry.getFace(i);
+
+            renderContext.geometry.getFloats(face.iWorldA, posBuf, 0, 3);
+            renderContext.geometry.getFloats(face.iColorA, posBuf, 3, 3);
+            renderContext.geometry.getFloats(face.iWorldB, posBuf, 6, 3);
+            renderContext.geometry.getFloats(face.iColorB, posBuf, 9, 3);
+            renderContext.geometry.getFloats(face.iWorldC, posBuf, 12, 3);
+            renderContext.geometry.getFloats(face.iColorC, posBuf, 15, 3);
+
+            vBuffer.put(posBuf);
+        }
+
+        vBuffer.position(0);
+
+        renderContext.geometry.setGeometryChangedFlag(false);
+    }
+
     public void setRenderContext(ERenderContext context)
     {
         renderContext = context;
@@ -67,24 +94,14 @@ public class ERenderer implements GLSurfaceView.Renderer
 
         if (renderContext == null) return;
 
-        for (int i = 0; i < renderContext.geometry.getFaceCount(); i++)
+        if (renderContext.geometry.getGeometryChangedFlag())
         {
-            //setting up vertices
-            face = renderContext.geometry.getFace(i);
-
-            renderContext.geometry.getFloats(face.iWorldA, posBuf, 0, 3);
-            renderContext.geometry.getFloats(face.iColorA, posBuf, 3, 3);
-            renderContext.geometry.getFloats(face.iWorldB, posBuf, 6, 3);
-            renderContext.geometry.getFloats(face.iColorB, posBuf, 9, 3);
-            renderContext.geometry.getFloats(face.iWorldC, posBuf, 12, 3);
-            renderContext.geometry.getFloats(face.iColorC, posBuf, 15, 3);
-
-            vBuffer.put(posBuf);
+            updateGeometry();
         }
 
         //copy vertex data into a buffer
-        //GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, iVBOBuffers[0]);
-        //GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, renderInstance.geometry.iFaceIndex * (3 + 3) * 4, vBuffer, GLES20.GL_STATIC_DRAW);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, iVBOBuffers[0]);
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, renderContext.geometry.getFloatCount() * 4, vBuffer, GLES20.GL_DYNAMIC_DRAW);
 
         //use shader
 
@@ -97,21 +114,20 @@ public class ERenderer implements GLSurfaceView.Renderer
         mvpMatrixHandle = GLES20.glGetUniformLocation(shaderProg, "uMVPMatrix");
         GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, renderContext.view.getMVPMatrix(), 0);
 
-        vBuffer.position(0);
-
         //position
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, iVBOBuffers[0]);
         positionHandle = GLES20.glGetAttribLocation(shaderProg, "v4Position");
         GLES20.glEnableVertexAttribArray(positionHandle);
-        GLES20.glVertexAttribPointer(0, 3, GLES20.GL_FLOAT, false, (3 + 3) * 4, vBuffer);
-
-        vBuffer.position(3);
+        GLES20.glVertexAttribPointer(0, 3, GLES20.GL_FLOAT, false, (3 + 3) * 4, 0);
 
         //color
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, iVBOBuffers[0]);
         colorHandle = GLES20.glGetAttribLocation(shaderProg, "v3Color");
         GLES20.glEnableVertexAttribArray(colorHandle);
-        GLES20.glVertexAttribPointer(1, 3, GLES20.GL_FLOAT, false, (3 + 3) * 4, vBuffer);
+        GLES20.glVertexAttribPointer(1, 3, GLES20.GL_FLOAT, false, (3 + 3) * 4, 3 * 4);
 
-        vBuffer.position(0);
+        //unbind buffer
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
         //draw
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, renderContext.geometry.getFaceCount() * 3);
